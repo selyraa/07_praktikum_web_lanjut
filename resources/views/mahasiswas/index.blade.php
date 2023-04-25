@@ -34,6 +34,7 @@
         <th>Jurusan</th>
         <th>No Handphone</th>
         <th>Email</th>
+        <th>Tanggal Lahir</th>
         <th width="280px">Action</th>
     </tr>
     
@@ -45,6 +46,7 @@
         <td>{{ $mhs->jurusan }}</td>
         <td>{{ $mhs->no_handphone }}</td>
         <td>{{ $mhs->email }}</td>
+        <td>{{ $mhs->tgl_lahir }}</td>
         <td>
             <form action="{{ route('mahasiswas.destroy',$mhs->nim) }}" method="POST">
                 <a class="btn btn-info" href="{{ route('mahasiswas.show',$mhs->nim) }}">Show</a>
@@ -52,6 +54,7 @@
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-danger">Delete</button>
+                <a class="btn btn-warning" href="{{ route('nilai',$mhs->nim) }}">Nilai</a>
             </form>
         </td>
     </tr>

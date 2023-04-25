@@ -25,11 +25,17 @@ class Mahasiswa extends Model //Definisi Model
         'jurusan',
         'no_handphone',
         'email',
+        'tgl_lahir',
     ];
 
     public function kelas()
     {
         return $this->belongsTo(Kelas::class);
+    }
+
+    public function matakuliah()
+    {
+        return $this->belongsToMany(MataKuliah::class);
     }
 };
 

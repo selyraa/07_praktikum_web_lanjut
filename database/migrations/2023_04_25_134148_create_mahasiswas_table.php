@@ -13,7 +13,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('mahasiswas', function (Blueprint $table) {
-            
             $table->bigIncrements('nim');
             $table->string('nama');
             $table->string('kelas');

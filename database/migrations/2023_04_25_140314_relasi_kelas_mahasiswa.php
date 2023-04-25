@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('mahasiswas', function (Blueprint $table) {
-            $table->addColumn('kelas'); //menghapus kolom kelas
+            $table->dropColumn('kelas'); //menghapus kolom kelas
             $table->unsignedBigInteger('kelas_id')->default(0); //menambahkan kolom kelas_id
             $table->foreign('kelas_id')->references('id')->on('kelas'); //menambahkan foreign key di kolom kelas_id
         });

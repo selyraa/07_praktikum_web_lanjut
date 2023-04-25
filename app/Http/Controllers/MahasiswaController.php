@@ -7,6 +7,7 @@ use App\Models\Kelas;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\DB;
 
 
 class MahasiswaController extends Controller
@@ -52,6 +53,7 @@ class MahasiswaController extends Controller
             'jurusan' => 'required',
             'no_handphone' => 'required',
             'email' => 'required',
+            'tgl_lahir' => 'required',
             ]);
 
             $mahasiswa = new Mahasiswa;
@@ -60,6 +62,7 @@ class MahasiswaController extends Controller
             $mahasiswa->jurusan = $request->get('jurusan');
             $mahasiswa->no_handphone = $request->get('no_handphone');
             $mahasiswa->email = $request->get('email');
+            $mahasiswa->tgl_lahir = $request->get('tgl_lahir');
             $mahasiswa->save();
 
             $kelas = new Kelas;
@@ -109,6 +112,7 @@ class MahasiswaController extends Controller
             'jurusan' => 'required',
             'no_handphone' => 'required',
             'email' => 'required',
+            'tgl_lahir' => 'required',
             ]);
 
             $mahasiswa = Mahasiswa::with('kelas')->where('nim', $nim)->first();
@@ -117,6 +121,7 @@ class MahasiswaController extends Controller
             $mahasiswa->jurusan = $request->get('jurusan');
             $mahasiswa->no_handphone = $request->get('no_handphone');
             $mahasiswa->email = $request->get('email');
+            $mahasiswa->tgl_lahir = $request->get('tgl_lahir');
             $mahasiswa->save();
 
             $kelas = new Kelas;
@@ -142,7 +147,20 @@ class MahasiswaController extends Controller
     public function cari(Request $request)
     {
         $cariMhs = $request->cariMhs;
-        $mahasiswas = Mahasiswa::where('nama', 'like', '%'.$cariMhs.'%')->paginate(5);
-        return view('mahasiswas.index', compact('mahasiswas'));
+        $paginate = Mahasiswa::where('nama', 'like', '%'.$cariMhs.'%')->paginate(5);
+        return view('mahasiswas.index', compact('paginate'));
+    }
+
+    public function nilai($nim)
+    {
+        $mahasiswas = Mahasiswa::with('matakuliah')->where('nim', $nim)->first();
+        $nilai = DB::table('mahasiswa_mata_kuliah')
+                    ->join('matakuliah', 'matakuliah.id', '=', 'mahasiswa_mata_kuliah.mata_kuliah_id')
+                    ->where('mahasiswa_mata_kuliah.mahasiswa_nim', $nim)
+                    ->select('nilai')
+                    ->get();
+
+        return view('mahasiswas.nilai', ['mahasiswas' => $mahasiswas, 'nilai' => $nilai]);
     }
 }
+
