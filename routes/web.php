@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 Route::resource('mahasiswas', MahasiswaController::class);
 Route::post('cari', [MahasiswaController::class, 'cari'])->name('cari');
 Route::get('mahasiswa/nilai/{nim}', [MahasiswaController::class, 'nilai'])->name('nilai');
+Route::get('/article/cetak_pdf', [ArticleController::class, 'cetak_pdf']);
 
 Route::resource('articles', ArticleController::class);
 
