@@ -69,7 +69,8 @@ class ArticleController extends Controller
         $article->title = $request->title;
         $article->content = $request->content;
 
-        if ($article->featured_image && file_exists(storage_path('app/public/' .$article->featured_image))) {
+        if ($article->featured_image && file_exists(storage_path('app/public/' .$article->featured_image))) 
+        {
             \Storage::delete('public/' .$article->featured_image);
         }
         $image_name = $request->file('image')->store('images', 'public');
@@ -89,7 +90,7 @@ class ArticleController extends Controller
 
     public function cetak_pdf(){
         $articles = Article::all();
-        $pdf = PDF::loadview('articles.articles_pdf', ['articles' => $articles]);
+        $pdf = PDF::loadView('articles.articles_pdf', ['articles' => $articles]);
         return $pdf->stream();
     }
 }

@@ -1,3 +1,5 @@
+@extends('articles.layout')
+@section('content')
 <!DOCTYPE html>
 <html>
     <head>
@@ -28,10 +30,19 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{$a->title}}</td>
                     <td>{{$a->content}}</td>
-                    <td>{{$a->featured_image}}</td>
+                    <!-- <td><img src="{{ asset($a->featured_image) }}" alt="featured_image"> </td> -->
+                    <td>
+                    <?php
+                    $foto = storage_path('public/storage/images/image.jpg');
+                    if ($a->featured_image!=null) $foto = storage_path('public/storage/images/' .$a->featured_image);
+                    ?>
+                    <img src="{{ $foto }}">
+                    </td>
+                    <!-- <td>{{$a->featured_image}}</td> -->
                 </tr>
                 @endforeach
             </tbody>
         </table>
     </body>
 </html>
+@endsection
